@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'rest_framework',
+    'rest_framework.authtoken',
     'api',
     'reviews',
     'titles',
@@ -107,21 +108,18 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
 
 # User model
+
 AUTH_USER_MODEL = 'users.User'
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.IsAuthenticated',
-#     ],
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ],
-# }
 
-# SIMPLE_JWT = {
-#     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-#     'AUTH_HEADER_TYPES': ('Bearer',),
-# }
+# Email emulation
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+
+MAILING_EMAIL = 'confirmation_code@gmail.com'
+
+# Permissions
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -133,8 +131,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
