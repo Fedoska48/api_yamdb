@@ -3,10 +3,16 @@ from django.db import models
 
 
 class User(AbstractUser):
+    """Модель создания пользователя."""
+
+    USER = 'user'
+    MODERATOR = 'moderator'
+    ADMIN = 'admin'
+
     USER_ROLES = [
-        ('user', 'user'),
-        ('moderator', 'moderator'),
-        ('admin', 'admin'),
+        (USER, 'user'),
+        (MODERATOR, 'moderator'),
+        (ADMIN, 'admin'),
     ]
     email = models.EmailField(
         max_length=254,
@@ -28,6 +34,21 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
+
+    @property
+    def is_admin(self):
+        """Проверка пользователя на наличие прав администратора."""
+        return self.role == self.ADMIN or self.is_superuser
+
+    @property
+    def is_moderator(self):
+        """Проверка пользователя на наличие прав модератора."""
+        return self.role == self.MODERATOR
+
+    @property
+    def is_user(self):
+        """Проверка пользователя на наличие стандартных прав."""
+        return self.role == self.USER
 
     class Meta:
         ordering = ('username',)
