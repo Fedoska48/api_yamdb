@@ -3,6 +3,16 @@ from rest_framework import serializers
 from .models import User
 
 
+class UserSerializer(serializers.ModelSerializer):
+    """Serializer модели User."""
+
+    class Meta:
+        model = User
+        fields = (
+            'username', 'email', 'first_name', 'last_name', 'bio', 'role',
+        )
+
+
 class CreateUserSerializer(serializers.ModelSerializer):
     """Serializer создания нового пользователя."""
 
@@ -19,7 +29,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 
 class CreateTokenSerializer(serializers.ModelSerializer):
-    """Serializer создания токена для нового пользователя."""
+    """Serializer создания JWT-токена для пользователей."""
     username = serializers.CharField()
     confirmation_code = serializers.CharField()
 
