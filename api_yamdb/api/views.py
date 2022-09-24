@@ -1,18 +1,18 @@
 # # from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 
-from api_yamdb.api.permissions import IsAdminOrReadOnly
-from api_yamdb.reviews.models import Review
+from .permissions import IsAdminOrReadOnly
+from reviews.models import Review
 from rest_framework import viewsets
 # permissions
 # filters, mixins,
 # from rest_framework.pagination import LimitOffsetPagination
 
 # from .permissions import OwnerOrReadOnly
-from api_yamdb.api.serializers import (ReviewSerializer, CommentSerializer,
+from .serializers import (ReviewSerializer, CommentSerializer,
                                        TitleSerializer, CategorySerializer,
                                        GenreSerializer)
-from api_yamdb.titles.models import Title, Category, Genre
+from titles.models import Title, Category, Genre
 
 
 class ReviewViewSet(viewsets.ModelViewSet):

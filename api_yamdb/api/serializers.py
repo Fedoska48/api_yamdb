@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
-from api_yamdb.reviews.models import Comment, Review
-from api_yamdb.titles.models import Category, Genre, Title
+from reviews.models import Comment, Review
+from titles.models import Category, Genre, Title
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 # from rest_framework.validators import UniqueTogetherValidator

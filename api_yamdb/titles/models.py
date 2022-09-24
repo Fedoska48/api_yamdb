@@ -26,7 +26,7 @@ class Title(models.Model):
         'Год',
         validators=[MaxValueValidator(datetime.now().year)]
     )
-    description = models.TextField('Описание')
+    description = models.TextField('Описание', null=True)
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
