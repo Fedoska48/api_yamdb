@@ -29,7 +29,7 @@ class Title(models.Model):
     description = models.TextField('Описание', null=True)
     category = models.ForeignKey(
         Category,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         null=True,
         related_name='titles',
         verbose_name='Категория'
