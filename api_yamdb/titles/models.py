@@ -5,31 +5,44 @@ from django.db import models
 
 
 class Genre(models.Model):
+    """Модель жанра."""
     name = models.CharField('Жанр', max_length=200)
     slug = models.SlugField(max_length=100, unique=True)
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Жанр'
+        verbose_name_plural = 'Жанры'
 
     def __str__(self):
         return self.name
 
 
 class Category(models.Model):
+    """Модель категории."""
     name = models.CharField('Категория', max_length=256)
     slug = models.SlugField(max_length=50, unique=True)
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
 
     def __str__(self):
         return self.name
 
 
 class Title(models.Model):
+    """Модель произведения."""
     name = models.CharField('Название', max_length=100)
     year = models.IntegerField(
         'Год',
         validators=[MaxValueValidator(datetime.now().year)]
     )
-    description = models.TextField('Описание')
+    description = models.TextField('Описание', null=True)
     category = models.ForeignKey(
         Category,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         null=True,
         related_name='titles',
         verbose_name='Категория'
@@ -38,6 +51,11 @@ class Title(models.Model):
         Genre,
         verbose_name='Жанр'
     )
+
+    class Meta:
+        ordering = ('-year',)
+        verbose_name = 'Произведение'
+        verbose_name_plural = 'Произведения'
 
     def __str__(self):
         return self.name
