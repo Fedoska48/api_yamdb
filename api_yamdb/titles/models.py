@@ -15,7 +15,7 @@ class Genre(models.Model):
         verbose_name_plural = 'Жанры'
 
     def __str__(self):
-        return self.name
+        return self.slug
 
 
 class Category(models.Model):
@@ -29,7 +29,7 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
     def __str__(self):
-        return self.name
+        return self.slug
 
 
 class Title(models.Model):
@@ -37,19 +37,20 @@ class Title(models.Model):
     name = models.CharField('Название', max_length=100)
     year = models.IntegerField(
         'Год',
-        validators=[MaxValueValidator(datetime.now().year)]
+        validators=[MaxValueValidator(int(datetime.now().year))]
     )
     rating = models.IntegerField(null=True, default=None)
     description = models.TextField('Описание', null=True)
     category = models.ForeignKey(
         Category,
-        null=True,
         on_delete=models.SET_NULL,
+        null=True,
         related_name='titles',
         verbose_name='Категория'
     )
     genre = models.ManyToManyField(
         Genre,
+        blank=True,
         verbose_name='Жанр'
     )
 
