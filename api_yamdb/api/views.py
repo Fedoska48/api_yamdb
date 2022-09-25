@@ -1,15 +1,23 @@
+from django.db.models import Avg
+from django_filters.rest_framework import DjangoFilterBackend
+
 from .permissions import IsAdminOrReadOnly
 from rest_framework import viewsets
 
-from api_yamdb.reviews.serializers import (TitleSerializer, CategorySerializer,
+from .serializers import (TitleSerializer, CategorySerializer,
                                            GenreSerializer)
 from titles.models import Title, Category, Genre
 
 
 class TitleViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.all()
     serializer_class = TitleSerializer
+    filter_backends = (DjangoFilterBackend,)
     permission_classes = [IsAdminOrReadOnly, ]
+
+    def get_queryset(self):
+        queryset = Title.objects.all().annotate(
+            Avg("reviews__score")).order_by("name")
+        return queryset
 
 
 class CategoryViewSet(viewsets.ModelViewSet):

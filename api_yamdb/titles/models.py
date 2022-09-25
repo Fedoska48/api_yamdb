@@ -39,11 +39,12 @@ class Title(models.Model):
         'Год',
         validators=[MaxValueValidator(datetime.now().year)]
     )
+    rating = models.IntegerField(null=True, default=None)
     description = models.TextField('Описание', null=True)
     category = models.ForeignKey(
         Category,
-        on_delete=models.CASCADE,
         null=True,
+        on_delete=models.SET_NULL,
         related_name='titles',
         verbose_name='Категория'
     )
