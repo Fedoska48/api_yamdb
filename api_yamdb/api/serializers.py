@@ -5,8 +5,12 @@ from titles.models import Category, Genre, Title
 
 
 class TitleSerializer(serializers.ModelSerializer):
-    category = serializers.ChoiceField(choices=Category.objects.all())
-    genre = serializers.ChoiceField(choices=Genre.objects.all())
+    category = serializers.SlugRelatedField(
+        required=True, slug_field='slug',
+        queryset=Category.objects.all())
+    genre = serializers.SlugRelatedField(
+        required=True, many=True, slug_field='slug',
+        queryset=Genre.objects.all())
 
     class Meta:
         fields = '__all__'
@@ -16,14 +20,14 @@ class TitleSerializer(serializers.ModelSerializer):
 class GenreSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = '__all__'
+        exclude = ('id',)
         model = Genre
 
 
 class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = '__all__'
+        exclude = ('id',)
         model = Category
 
 
