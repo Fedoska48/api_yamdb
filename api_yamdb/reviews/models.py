@@ -1,17 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from titles.models import Title
 
 User = get_user_model()
-
-
-class Title(models.Model):
-    pass
 
 
 class Review(models.Model):
     text = models.TextField()
     pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
-    score = models.IntegerField()
+    score = models.IntegerField(choices=list(zip(range(1, 11), range(1, 11))))
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='reviews')
     title = models.ForeignKey(

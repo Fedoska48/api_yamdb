@@ -1,22 +1,18 @@
 # # from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
-
-from reviews.models import Review
+from .models import Review
 from rest_framework import viewsets
 # permissions
 # filters, mixins,
 # from rest_framework.pagination import LimitOffsetPagination
 
 # from .permissions import OwnerOrReadOnly
-from .serializers import (ReviewSerializer, CommentSerializer,
-                                           TitleSerializer, CategorySerializer,
-                                           GenreSerializer)
+from .serializers import (ReviewSerializer, CommentSerializer)
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-
     # permission_classes = (
     #     permissions.IsAuthenticatedOrReadOnly,
     #     # OwnerOrReadOnly,
@@ -29,7 +25,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-
     # permission_classes = (
     #     permissions.IsAuthenticatedOrReadOnly,
     #     # OwnerOrReadOnly,
@@ -42,6 +37,3 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         review = get_object_or_404(Review, id=self.kwargs.get('review_id'))
         serializer.save(author=self.request.user, review=review)
-
-
-
