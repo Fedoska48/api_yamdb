@@ -15,29 +15,33 @@ from .serializers import (CategorySerializer, CommentSerializer,
 
 
 class TitleViewSet(viewsets.ModelViewSet):
+    """Вьюсет для произведения."""
     serializer_class = TitleSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
-    filterset_fields = ('name', 'year', 'category')
-    search_fields = ('name', 'category')
+    filterset_fields = ('name', 'year', 'category', 'genre')
+    search_fields = ('name', 'year', 'category', 'genre')
     permission_classes = [IsAdminOrReadOnly, ]
 
     def get_queryset(self):
         queryset = Title.objects.all().annotate(
-                Avg('reviews__score')).order_by('name')
+            Avg('reviews__score')).order_by('name').prefetch_related(
+            'category', 'genre')
         return queryset
 
 
 class CategoryViewSet(GetListCreateDeleteMixin):
+    """Вьюсет для категории."""
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAdminOrReadOnly, ]
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filterset_fields = ('name', 'slug')
-    search_fields = ('name', 'slug')
+    search_fields = ('name', 'slug',)
     lookup_field = 'slug'
 
 
 class GenreViewSet(GetListCreateDeleteMixin):
+    """Вьюсет для жанра."""
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = [IsAdminOrReadOnly, ]
