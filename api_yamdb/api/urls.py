@@ -8,8 +8,11 @@ app_name = 'api'
 router = DefaultRouter()
 
 router.register(r'categories', CategoryViewSet, basename='categories')
-router.register('titles/{title_id}/reviews/{review_id}',
-                ReviewViewSet, basename='reviews')
+router.register(
+    r'titles/(?P<title_id>\d+)/reviews',
+    ReviewViewSet, basename='reviews'
+)
+
 router.register(r'titles/{title_id}/reviews/{review_id}/comments',
                 CommentViewSet, basename='comments')
 router.register(r'titles', TitleViewSet, basename='titles')
