@@ -17,8 +17,8 @@ from .serializers import (CategorySerializer, CommentSerializer,
 class TitleViewSet(viewsets.ModelViewSet):
     serializer_class = TitleSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
-    filterset_fields = ('name', 'year', 'category')
-    search_fields = ('name', 'category')
+    filterset_fields = ('name', 'year', 'category', 'genre')
+    search_fields = ('name', 'year', 'category', 'genre')
     permission_classes = [IsAdminOrReadOnly, ]
 
     def get_queryset(self):
@@ -33,7 +33,7 @@ class CategoryViewSet(GetListCreateDeleteMixin):
     permission_classes = [IsAdminOrReadOnly, ]
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filterset_fields = ('name', 'slug')
-    search_fields = ('name', 'slug')
+    search_fields = ('name', 'slug',)
     lookup_field = 'slug'
 
 
