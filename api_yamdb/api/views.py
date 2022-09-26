@@ -8,7 +8,7 @@ from reviews.models import Review
 from titles.models import Category, Genre, Title
 
 from .mixins import GetListCreateDeleteMixin
-from .permissions import IsAdminOrReadOnly, IsAdminModeratorAuthor
+from .permissions import IsAdminModeratorAuthor, IsAdminOrReadOnly
 from .serializers import (CategorySerializer, CommentSerializer,
                           GenreSerializer, ReviewSerializer, TitleSerializer)
 

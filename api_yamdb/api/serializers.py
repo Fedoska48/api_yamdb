@@ -1,9 +1,9 @@
+from django.db.models import Avg
 from django.forms import ValidationError
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from reviews.models import Comment, Review
 from titles.models import Category, Genre, Title
-from django.shortcuts import get_object_or_404
-from django.db.models import Avg
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -82,7 +82,7 @@ class CommentSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         read_only=True, slug_field='username'
     )
-    post = serializers.ReadOnlyField(
+    review = serializers.ReadOnlyField(
         source='review.id'
     )
 
