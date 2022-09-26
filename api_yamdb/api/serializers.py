@@ -1,10 +1,11 @@
 from rest_framework import serializers
-from rest_framework.relations import SlugRelatedField
+from rest_framework.relations import SlugRelatedField, PrimaryKeyRelatedField
 from reviews.models import Comment, Review
 from titles.models import Category, Genre, Title
 
 
 class GenreSerializer(serializers.ModelSerializer):
+    """Сериализатор для жанра."""
 
     class Meta:
         exclude = ('id',)
@@ -12,6 +13,7 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    """Сериализатор для категории."""
 
     class Meta:
         exclude = ('id',)
@@ -19,6 +21,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class TitleSerializer(serializers.ModelSerializer):
+    """Сериализатор для произведения."""
     category = serializers.SlugRelatedField(
         required=True, slug_field='slug',
         queryset=Category.objects.all())
