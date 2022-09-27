@@ -7,7 +7,7 @@ from django.db import models
 class Genre(models.Model):
     """Модель жанра."""
     name = models.CharField('Жанр', max_length=200)
-    slug = models.SlugField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=50, unique=True)
 
     class Meta:
         ordering = ('name',)
