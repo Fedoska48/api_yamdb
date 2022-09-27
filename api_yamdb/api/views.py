@@ -10,8 +10,8 @@ from .filters import TitleFilter
 from .mixins import GetListCreateDeleteMixin
 from .permissions import IsAdminModeratorAuthor, IsAdminOrReadOnly
 from .serializers import (CategorySerializer, CommentSerializer,
-                          GenreSerializer, ReviewSerializer, TitleSerializer,
-                          TitleGetSerializer)
+                          GenreSerializer, ReviewSerializer,
+                          TitleGetSerializer, TitleSerializer)
 
 
 class TitleViewSet(viewsets.ModelViewSet):
