@@ -4,12 +4,12 @@ from django.core.management import BaseCommand
 # from reviews.models import (Category, Comment, Genre, Review,
 #                             Title, User)
 from reviews.models import Comment, Review
-from users.models import User
 from titles.models import Category, Genre, Title
+from users.models import User
 
 
 class User(BaseCommand):
-    help = 'Loads user.csv data'
+    help = 'Loads users.csv data'
 
     def handle(self, *args, **options):
         for row in DictReader(
@@ -64,7 +64,7 @@ class Review(BaseCommand):
 
 
 class Title(BaseCommand):
-    help = 'Loads title.csv data'
+    help = 'Loads titles.csv data'
 
     def handle(self, *args, **options):
         for row in DictReader(
@@ -78,7 +78,7 @@ class Title(BaseCommand):
 
 
 class Comment(BaseCommand):
-    help = 'Loads comment.csv data'
+    help = 'Loads commentsсв .csv data'
 
     def handle(self, *args, **options):
         for row in DictReader(

@@ -17,7 +17,7 @@ from .serializers import (CategorySerializer, CommentSerializer,
 class TitleViewSet(viewsets.ModelViewSet):
     """Вьюсет для произведения."""
     queryset = Title.objects.all().annotate(
-            Avg('reviews__score')).order_by('name').prefetch_related(
+        Avg('reviews__score')).order_by('name').prefetch_related(
             'category', 'genre')
     serializer_class = TitleSerializer
     filter_backends = [DjangoFilterBackend]
