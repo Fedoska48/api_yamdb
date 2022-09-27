@@ -3,29 +3,34 @@ from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter
-# from rest_framework.pagination import PageNumberPagination
 from reviews.models import Review
 from titles.models import Category, Genre, Title
 
+from .filters import TitleFilter
 from .mixins import GetListCreateDeleteMixin
 from .permissions import IsAdminModeratorAuthor, IsAdminOrReadOnly
 from .serializers import (CategorySerializer, CommentSerializer,
-                          GenreSerializer, ReviewSerializer, TitleSerializer)
+                          GenreSerializer, ReviewSerializer, TitleSerializer,
+                          TitleGetSerializer)
 
 
 class TitleViewSet(viewsets.ModelViewSet):
     """Вьюсет для произведения."""
-    serializer_class = TitleSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter)
-    filterset_fields = ('name', 'year', 'category', 'genre')
-    search_fields = ('name', 'year', 'category', 'genre')
-    permission_classes = [IsAdminOrReadOnly, ]
-
-    def get_queryset(self):
-        queryset = Title.objects.all().annotate(
+    queryset = Title.objects.all().annotate(
             Avg('reviews__score')).order_by('name').prefetch_related(
             'category', 'genre')
-        return queryset
+    serializer_class = TitleSerializer
+    filter_class = TitleFilter
+    # filter_backends = (DjangoFilterBackend, SearchFilter)
+    # filter_backends = (SearchFilter,)
+    # filterset_fields = ('name', 'year', 'category__slug', 'genre__slug')
+    # search_fields = ('name', 'year', 'category__slug', 'genre__slug')
+    permission_classes = [IsAdminOrReadOnly, ]
+
+    def get_serializer_class(self):
+        if self.request.method in ('POST', 'PATCH'):
+            return TitleSerializer
+        return TitleGetSerializer
 
 
 class CategoryViewSet(GetListCreateDeleteMixin):
