@@ -20,11 +20,8 @@ class TitleViewSet(viewsets.ModelViewSet):
             Avg('reviews__score')).order_by('name').prefetch_related(
             'category', 'genre')
     serializer_class = TitleSerializer
+    filter_backends = [DjangoFilterBackend]
     filter_class = TitleFilter
-    # filter_backends = (DjangoFilterBackend, SearchFilter)
-    # filter_backends = (SearchFilter,)
-    # filterset_fields = ('name', 'year', 'category__slug', 'genre__slug')
-    # search_fields = ('name', 'year', 'category__slug', 'genre__slug')
     permission_classes = [IsAdminOrReadOnly, ]
 
     def get_serializer_class(self):
