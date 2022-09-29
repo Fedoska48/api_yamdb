@@ -12,11 +12,11 @@ from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from reviews.models import Review
 from titles.models import Category, Genre, Title
 from users.models import User
 from users.permissions import IsAdminUser
+
 from .filters import TitleFilter
 from .mixins import GetListCreateDeleteMixin
 from .permissions import IsAdminModeratorAuthor, IsAdminOrReadOnly
