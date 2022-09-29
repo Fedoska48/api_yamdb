@@ -1,4 +1,5 @@
 from django.db.models import Avg
+from django.db.models.functions import Coalesce
 from django.forms import ValidationError
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
@@ -35,10 +36,9 @@ class TitleSerializer(serializers.ModelSerializer):
     rating = serializers.SerializerMethodField()
 
     def get_rating(self, obj):
-        if obj.reviews.all():
-            rating = obj.reviews.aggregate(Avg('score'))
-            return int(rating.get('score__avg'))
-        return None
+        rating = obj.reviews.aggregate(Avg('score', default=0))
+        return rating.get('score__avg')
+
 
     class Meta:
         fields = [
@@ -57,10 +57,8 @@ class TitleGetSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_rating(self, obj):
-        if obj.reviews.all():
-            rating = obj.reviews.aggregate(Avg('score'))
-            return int(rating.get('score__avg'))
-        return None
+        rating = obj.reviews.aggregate(Avg('score', default=0))
+        return rating.get('score__avg')
 
 
 class ReviewSerializer(serializers.ModelSerializer):
