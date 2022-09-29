@@ -30,7 +30,8 @@ class TitleViewSet(viewsets.ModelViewSet):
     """Вьюсет для произведения."""
     queryset = Title.objects.all().annotate(
         Avg('reviews__score')).prefetch_related(
-        'category', 'genre')
+        'category', 'genre'
+    )
     serializer_class = TitleSerializer
     filter_backends = [DjangoFilterBackend]
     filter_class = TitleFilter
